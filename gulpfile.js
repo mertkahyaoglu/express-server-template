@@ -4,7 +4,9 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     del = require('del'),
     nodemon = require('gulp-nodemon'),
-    refresh = require('gulp-livereload');
+    refresh = require('gulp-livereload')
+    uglify = require('gulp-uglify'),
+    streamify = require('gulp-streamify');
 
 var paths = {
   scripts: ['./public/scripts/*.js'],
@@ -21,6 +23,7 @@ gulp.task('build', function () {
   .transform(babelify)
   .bundle()
   .pipe(source('bundle.js'))
+  .pipe(streamify(uglify()))
   .pipe(gulp.dest('public/scripts/dist'))
   .pipe(refresh());
 });
